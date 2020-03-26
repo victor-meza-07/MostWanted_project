@@ -6,19 +6,53 @@ Build all of your functions for displaying and gathering information below (GUI)
 // app is the function called to start the entire application
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  let filterPeople;
+  var firstName;
+  var lastName;
+  var person;
   let searchResults;
   switch(searchType){
     case 'yes':
+      //TODO: search by name
+      /**
+      @summary (Stating a default output when wrong input is entered)
+      @param - the parameters it takes in 
+      */
       searchResults = searchByName(people);
       break;
     case 'no':
-      GenerateArrayOfTraits();
+      // TODO: search by traits
+      searchByTrait(people);
       break;
       default:
+        alert("Invalid input. Please try again!")
     app(people); // restart app
       break;
   }
-  
+  /**
+@summary (brief decription)
+@param - the parameters it takes in
+*/
+}
+  if (searchType === "yes"){
+    firstName = filterPeople.firstName;
+    lastName = filterPeople.lastName;
+    displayPerson(filterPeople);
+    person = filterPeople;
+  }
+  if(searchType === "no"){
+    filterPeople = selectPersonFromSearch();
+    firstname = filterPeople[0];
+    lastName = filterPeople[1];
+  }
+  let filteredName = people.filter(function(el) {
+    if(el.firstName === firstName && el.lastName === lastName) {
+
+    }
+  });
+  if(searchType === "no"){
+    person = filteredName[0];
+  }
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
@@ -26,8 +60,7 @@ function app(people){
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
-  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people.
-   We need people in order to find descendants and other information that the user may want. */
+  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
   if(!person){
     alert("Could not find that individual.");
@@ -39,17 +72,6 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     // TODO: get person's info
-    alert( "ID:"+" "+person.id+" "+"First Name:"+" "+
-      person.firstName+" "+
-    person.lastName+" "+
-    person.gender+" "+
-    person.dob+" "+
-    person.height+" "+
-    person.weight+" "+
-    person.eyeColor+" "+
-    person.occupation+" "+
-    person.parents+" "+
-    person.currentSpouse)
     break;
     case "family":
     // TODO: get person's family
@@ -93,9 +115,14 @@ function displayPeople(people){
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  let personInfo = "First Name: " + person.firstName + "\n";
+  var personInfo = "First Name: "+ person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   // TODO: finish getting the rest of the information to display
+  personInfo += "Height: " + person.height + "\n";
+  personInfo += "Weight: " + person.height + "\n";
+  personInfo += "Age: " + person.dob + "\n";
+  personInfo += "Occupation: " + person.occupation + "\n";
+  personInfo += "Eye Color: " + person.eyeColor + "\n";
   alert(personInfo);
 }
 
@@ -115,55 +142,4 @@ function yesNo(input){
 // helper function to pass in as default promptFor validation
 function chars(input){
   return true; // default validation only
-}
-
-
-/*Victor's Logic*/
-//take in user input for the trait to be looked for as an array.
-function GenerateArrayOfTraits()
-{
-  /*
-    Possible Traits:
-    "gender": "female",
-		"dob": "10/7/1953",
-		"height": 70,
-		"weight": 187,
-		"eyeColor": "brown",
-  */
-  let choices = ["\n1. Gender","\n2. Dob","\n3. Height","\n4. Weight","\n5. Eye Color"];
-  let stringOfTraits = prompt("Seraching by Traits: please select the number associated with your choice seperated by a space:"+
-  `${choices[0]}${choices[1]}${choices[2]}${choices[3]}${choices[4]}`);
-  console.log(stringOfTraits);
-  let arrayOfTraits = stringOfTraits.split(" ");
-  let numarr = [];
-  for (let i = 0; i < arrayOfTraits.length; i++)
-  {
-    numarr[i] = Validate(1,5,arrayOfTraits[i]);
-  }
-
-  
-}
-
-/**
- * @summary Will return the numerical value of the choice or -1 if invalid. 
- * @param {number} minoption 
- * @param {number} maxoption 
- * @param {string} userchoice
- * @returns {number} a number;
- */
-function Validate(minoption, maxoption, userchoice)
-{
-  let choice;
-  let numberedOptionMin = parseInt(minoption);
-  let numberedOptionMax = parseInt(maxoption);
-  let validatedChoice = -1; 
-  if(userchoice != null)
-  {
-    choice = parseInt(userchoice);
-  }
-  if(!(choice < numberedOptionMin) && !(choice > numberedOptionMax))
-  {
-    validatedChoice = choice; 
-  }
-  return choice;
 }

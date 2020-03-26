@@ -41,21 +41,41 @@ function mainMenu(person, people){
     // TODO: get person's info
     alert( "ID:"+" "+person.id+" "+"First Name:"+" "+
       person.firstName+" "+
-    person.lastName+" "+
-    person.gender+" "+
-    person.dob+" "+
-    person.height+" "+
-    person.weight+" "+
-    person.eyeColor+" "+
-    person.occupation+" "+
-    person.parents+" "+
-    person.currentSpouse)
+    "Last Name :"+" "+person.lastName+" "+ "Gender :"+" "+ 
+    person.gender+" "+"Dob:"+" "+
+    person.dob+" "+"Height:"+" "+
+    person.height+" "+"Weight:"+" "+
+    person.weight+" "+"Eye Color :"+" "+
+    person.eyeColor+" "+"Occupation:"+" "+
+    person.occupation)
+    
+    
     break;
     case "family":
     // TODO: get person's family
+    let sib =people.parents==person.parents;
+    alert("Parents :"+person.parents+" "+"Siblings :"+" "+sib+"Spouse :"
+    +" "+person.currentSpouse)
     break;
     case "descendants":
     // TODO: get person's descendants
+    let child=people.filter(function(el){
+      if( el.parents==person.id){
+        return true;}
+        else{
+          return false;
+        }
+
+    });
+    let grands=people.filter(function(el){
+      if( el.parents==child.id){
+        return true;}
+        else{
+          return false;
+        }
+    });
+    alert("Children:"+" "+child+"Any other known decendants :"+" "+grands)
+
     break;
     case "restart":
     app(people); // restart

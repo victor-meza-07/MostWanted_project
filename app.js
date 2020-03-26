@@ -143,8 +143,27 @@ function displayPerson(person){
   // height, weight, age, name, occupation, eye color.
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
+  
+
+  let firstname = `First Name: ${person.firstName}\n`;
+  let lastName = `Last Name: ${person.lastName}\n`;
+  let gender = `Gender: ${person.gender}\n`;
+  let dob = `Date of Birth: ${person.dob}\n`;
+  let height = `Height: ${person.height}\n`;
+  let weight = `Weight: ${person.weight}\n`;
+  let eyeColor = `Eye Color: ${person.eyeColor}\n`;
+  let occupation = `Occupation: ${person.occupation}\n`;
+  let parents = `Parents: ${person.parents}\n`;
+  let currentSpouce = `Spouce: ${person.currentSpouce}\n`;
+  let seperator = "-----------------------------\n";
+
+
+
+  let fullpersonDetails = firstname + lastName + gender + dob + height + weight 
+  + eyeColor + occupation + parents + currentSpouce + seperator;
   // TODO: finish getting the rest of the information to display
-  alert(personInfo);
+  //alert(fullpersonDetails);
+  return fullpersonDetails;
 }
 
 // function that prompts and validates user input
@@ -336,7 +355,7 @@ function test (people)
   let message; message = "";
   for(let i = 0; i < a.length; i++)
   {
-    if (a[i] != undefined){message += (a[i].firstName + "\n")}
+    if (a[i] != undefined){message += (displayPerson(a[i]));}
   }
 
   console.log(message);

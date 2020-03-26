@@ -284,3 +284,61 @@ function serachBySingleTrait(trait, people, traitParam)
 
   return listOfPeople;
 }
+
+//For UserStories Purposes:
+function searchBySingleTraitStory(trait, people, traitParam)
+{
+    let traitValue = _traitDictionary[trait];
+    let peopleList; peopleList = [];
+    switch(traitValue)
+    {
+      case "gender":
+        peopleList = people.map(function(item, index, array)
+        {
+          if(item.gender == traitParam){return item;}
+        });
+        break;
+      case "dob":
+        peopleList = people.map(function(item, index, array)
+        {
+          if(item.dob == traitParam){return item;}
+        });
+        break;
+      case "height":
+        peopleList = people.map(function(item, index, array)
+        {
+          if(item.height == traitParam){return item;}
+        });
+        break;
+      case "weight":
+        peopleList = people.map(function(item, index, array)
+        {
+          if(item.weight == traitParam){return item;}
+        });
+        break;
+      case "eyeColor":
+        peopleList = people.map(function(item, index, array)
+        {
+          if(item.eyeColor == traitParam){return item;}
+        });
+        break;
+      default:
+        break;
+    }
+
+    return peopleList;
+}
+
+
+function test (people)
+{
+  let a = searchBySingleTraitStory(1, people, "male");
+  let message; message = "";
+  for(let i = 0; i < a.length; i++)
+  {
+    if (a[i] != undefined){message += (a[i].firstName + "\n")}
+  }
+
+  console.log(message);
+  alert(message);
+}

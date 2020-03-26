@@ -9,10 +9,6 @@ var _traitDictionary = {1:"gender", 2:"dob", 3:"height", 4:"weight", 5:"eyeColor
 function app(people)
 {
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
-  let filterPeople;
-  var firstName;
-  var lastName;
-  var person;
   let searchResults;
   switch(searchType){
     case 'yes':
@@ -23,7 +19,6 @@ function app(people)
       searchResults = serachBytraits(arrayOfTraits, people);
       break;
       default:
-        alert("Invalid input. Please try again!")
     app(people); // restart app
       break;
   }
@@ -59,7 +54,8 @@ function SearchByName()
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
-  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
+  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people.
+   We need people in order to find descendants and other information that the user may want. */
 
   if(!person){
     alert("Could not find that individual.");
@@ -71,12 +67,43 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     // TODO: get person's info
+    alert( "ID:"+" "+person.id+" "+"First Name:"+" "+
+      person.firstName+" "+
+    "Last Name :"+" "+person.lastName+" "+ "Gender :"+" "+ 
+    person.gender+" "+"Dob:"+" "+
+    person.dob+" "+"Height:"+" "+
+    person.height+" "+"Weight:"+" "+
+    person.weight+" "+"Eye Color :"+" "+
+    person.eyeColor+" "+"Occupation:"+" "+
+    person.occupation)
+    
+    
     break;
     case "family":
     // TODO: get person's family
+    let sib =people.parents==person.parents;
+    alert("Parents :"+person.parents+" "+"Siblings :"+" "+sib+"Spouse :"
+    +" "+person.currentSpouse)
     break;
     case "descendants":
     // TODO: get person's descendants
+    let child=people.filter(function(el){
+      if( el.parents==person.id){
+        return true;}
+        else{
+          return false;
+        }
+
+    });
+    let grands=people.filter(function(el){
+      if( el.parents==child.id){
+        return true;}
+        else{
+          return false;
+        }
+    });
+    alert("Children:"+" "+child+"Any other known decendants :"+" "+grands)
+
     break;
     case "restart":
     app(people); // restart
@@ -114,14 +141,9 @@ function displayPeople(people){
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  var personInfo = "First Name: "+ person.firstName + "\n";
+  let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   // TODO: finish getting the rest of the information to display
-  personInfo += "Height: " + person.height + "\n";
-  personInfo += "Weight: " + person.height + "\n";
-  personInfo += "Age: " + person.dob + "\n";
-  personInfo += "Occupation: " + person.occupation + "\n";
-  personInfo += "Eye Color: " + person.eyeColor + "\n";
   alert(personInfo);
 }
 

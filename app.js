@@ -6,8 +6,13 @@ Build all of your functions for displaying and gathering information below (GUI)
 var _traitDictionary = {1:"gender", 2:"dob", 3:"height", 4:"weight", 5:"eyeColor"}
 
 // app is the function called to start the entire application
-function app(people){
+function app(people)
+{
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  let filterPeople;
+  var firstName;
+  var lastName;
+  var person;
   let searchResults;
   switch(searchType){
     case 'yes':
@@ -18,10 +23,35 @@ function app(people){
       searchResults = serachBytraits(arrayOfTraits, people);
       break;
       default:
+        alert("Invalid input. Please try again!")
     app(people); // restart app
       break;
   }
-  
+}
+ 
+
+
+function SearchByName()
+{
+  if (searchType === "yes"){
+    firstName = filterPeople.firstName;
+    lastName = filterPeople.lastName;
+    displayPerson(filterPeople);
+    person = filterPeople;
+  }
+  if(searchType === "no"){
+    filterPeople = selectPersonFromSearch();
+    firstname = filterPeople[0];
+    lastName = filterPeople[1];
+  }
+  let filteredName = people.filter(function(el) {
+    if(el.firstName === firstName && el.lastName === lastName) {
+
+    }
+  });
+  if(searchType === "no"){
+    person = filteredName[0];
+  }
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
@@ -84,9 +114,14 @@ function displayPeople(people){
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  let personInfo = "First Name: " + person.firstName + "\n";
+  var personInfo = "First Name: "+ person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   // TODO: finish getting the rest of the information to display
+  personInfo += "Height: " + person.height + "\n";
+  personInfo += "Weight: " + person.height + "\n";
+  personInfo += "Age: " + person.dob + "\n";
+  personInfo += "Occupation: " + person.occupation + "\n";
+  personInfo += "Eye Color: " + person.eyeColor + "\n";
   alert(personInfo);
 }
 

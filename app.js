@@ -26,7 +26,8 @@ function app(people){
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
-  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
+  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people.
+   We need people in order to find descendants and other information that the user may want. */
 
   if(!person){
     alert("Could not find that individual.");
@@ -38,6 +39,17 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     // TODO: get person's info
+    alert( "ID:"+" "+person.id+" "+"First Name:"+" "+
+      person.firstName+" "+
+    person.lastName+" "+
+    person.gender+" "+
+    person.dob+" "+
+    person.height+" "+
+    person.weight+" "+
+    person.eyeColor+" "+
+    person.occupation+" "+
+    person.parents+" "+
+    person.currentSpouse)
     break;
     case "family":
     // TODO: get person's family

@@ -3,6 +3,8 @@
 Build all of your functions for displaying and gathering information below (GUI).
 */
 
+var _traitDictionary = {1:"gender", 2:"dob", 3:"height", 4:"weight", 5:"eyeColor"}
+
 // app is the function called to start the entire application
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
@@ -12,7 +14,8 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      GenerateArrayOfTraits();
+      let arrayOfTraits = GenerateArrayOfTraits();
+      searchResults = serachBytraits(arrayOfTraits, people);
       break;
       default:
     app(people); // restart app
@@ -107,7 +110,45 @@ function chars(input){
 
 
 /*Victor's Logic*/
-//take in user input for the trait to be looked for as an array.
+
+/**
+ * @summary takes an array of selected traits outputs collection of matching poeple.
+ * @param {Int32Array} arrayOfTraitsSelected
+ * @param {People} - Database of People. 
+ * @returns {collectionOfPeopleMatchingSearch} - a collection of person objects matching the search. 
+ */
+function serachBytraits(arrayOfTraitsSelected, DatabaseOfPeople)
+{
+  let collectionOfPeopleMatchingSearch = DatabaseOfPeople;
+
+  //We will use filter
+  //get the size of the filter.
+  if(arrayOfTraitsSelected != null)
+  {
+    let messageShown = false; 
+    for(let i = 0; i < arrayOfTraitsSelected.length; i++)
+    {
+      if (arrayOfTraitsSelected[i] != -1 && messageShown == false)
+      {
+        alert("You will be prompted for the parameters");
+        messageShown = true;
+      }
+      if(arrayOfTraitsSelected[i] != -1)
+      {
+        let param = prompt(`Please Enter Criteria for: ${_traitDictionary[arrayOfTraitsSelected[i]]}`);
+        collectionOfPeopleMatchingSearch = serachBySingleTrait(arrayOfTraitsSelected[i], collectionOfPeopleMatchingSearch, param);
+      }
+    }
+  }
+
+
+  return collectionOfPeopleMatchingSearch;
+}
+
+/**
+ * @summary Takes in user input, returns numerical array
+ * @returns {Int32Array} An Int32Array
+ */
 function GenerateArrayOfTraits()
 {
   /*
@@ -126,10 +167,17 @@ function GenerateArrayOfTraits()
   let numarr = [];
   for (let i = 0; i < arrayOfTraits.length; i++)
   {
-    numarr[i] = Validate(1,5,arrayOfTraits[i]);
+    let userChoice = Validate(1, 5, arrayOfTraits[i]);
+    if(userChoice != -1)
+    {
+      numarr[i] = userChoice;
+    }
+    else
+    {
+      numarr[i] = -1;
+    }
   }
-
-  
+  return numarr;
 }
 
 /**
@@ -153,5 +201,29 @@ function Validate(minoption, maxoption, userchoice)
   {
     validatedChoice = choice; 
   }
-  return choice;
+  return validatedChoice;
+}
+
+/**
+ * @summary Takes an int value for trait, object for db, and string for trait param returns list matching results.
+ * @param {Int32} trait - the numerical value that will be compared against in the dictionat
+ * @param {data} people - The Collection of people to filter through;
+ * @param {any} traitParam - The Parameter of the trait.
+ * @returns A list of people mathing your search from this list. 
+ */
+function serachBySingleTrait(trait, people, traitParam)
+{
+  let listOfPeople = [];
+  let selectedTrait = _traitDictionary[trait];
+  for(let i = 0; i < people.length; i++)
+  {
+    if(selectedTrait == "gender"){if(people[i].gender == traitParam){listOfPeople[i] = people[i];}}
+    else if(selectedTrait == "dob"){if(people[i].dob == traitParam){listOfPeople[i] = people[i];}}
+    else if(selectedTrait == "height"){if(people[i].height == traitParam){listOfPeople[i] = people[i];}}
+    else if(selectedTrait == "weight"){if(people[i].weight == traitParam){listOfPeople[i] = people[i];}}
+    else if(selectedTrait == "eyeColor"){if(people[i].eyeColor == traitParam){listOfPeople[i] = people[i];}}
+  }
+
+
+  return listOfPeople;
 }

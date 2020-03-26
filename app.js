@@ -12,7 +12,7 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      // TODO: search by traits
+      GenerateArrayOfTraits();
       break;
       default:
     app(people); // restart app
@@ -115,4 +115,55 @@ function yesNo(input){
 // helper function to pass in as default promptFor validation
 function chars(input){
   return true; // default validation only
+}
+
+
+/*Victor's Logic*/
+//take in user input for the trait to be looked for as an array.
+function GenerateArrayOfTraits()
+{
+  /*
+    Possible Traits:
+    "gender": "female",
+		"dob": "10/7/1953",
+		"height": 70,
+		"weight": 187,
+		"eyeColor": "brown",
+  */
+  let choices = ["\n1. Gender","\n2. Dob","\n3. Height","\n4. Weight","\n5. Eye Color"];
+  let stringOfTraits = prompt("Seraching by Traits: please select the number associated with your choice seperated by a space:"+
+  `${choices[0]}${choices[1]}${choices[2]}${choices[3]}${choices[4]}`);
+  console.log(stringOfTraits);
+  let arrayOfTraits = stringOfTraits.split(" ");
+  let numarr = [];
+  for (let i = 0; i < arrayOfTraits.length; i++)
+  {
+    numarr[i] = Validate(1,5,arrayOfTraits[i]);
+  }
+
+  
+}
+
+/**
+ * @summary Will return the numerical value of the choice or -1 if invalid. 
+ * @param {number} minoption 
+ * @param {number} maxoption 
+ * @param {string} userchoice
+ * @returns {number} a number;
+ */
+function Validate(minoption, maxoption, userchoice)
+{
+  let choice;
+  let numberedOptionMin = parseInt(minoption);
+  let numberedOptionMax = parseInt(maxoption);
+  let validatedChoice = -1; 
+  if(userchoice != null)
+  {
+    choice = parseInt(userchoice);
+  }
+  if(!(choice < numberedOptionMin) && !(choice > numberedOptionMax))
+  {
+    validatedChoice = choice; 
+  }
+  return choice;
 }

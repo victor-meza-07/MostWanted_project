@@ -5,6 +5,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 
 var _traitDictionary = {1:"gender", 2:"dob", 3:"height", 4:"weight", 5:"eyeColor"}
 
+
 // app is the function called to start the entire application
 function app(people)
 {
@@ -17,11 +18,14 @@ function app(people)
     case 'no':
       let arrayOfTraits = GenerateArrayOfTraits();
       searchResults = serachBytraits(arrayOfTraits, people);
+      searchResults = returnOnePerson(searchResults);
       break;
       default:
     app(people); // restart app
       break;
   }
+
+  mainMenu(searchResults, people);
 
 }
  
@@ -107,7 +111,7 @@ function mainMenu(person, people){
           return false;
         }
     });
-    alert("Children:"+" "+DisplayName(child)+"Any other known decendants :"+" "+DisplayName(grands))
+    alert("Children:"+" "+child+"Any other known decendants :"+" "+grands)
 
     break;
     case "restart":
@@ -190,7 +194,34 @@ function chars(input){
 }
 
 
+
 /*Victor's Logic*/
+
+function returnOnePerson (listofPeople)
+{
+  let message = "\n";
+  for (let i = 0; i < listofPeople.length; i++)
+  {
+    if(listofPeople[i] != undefined)
+    {
+      message += `${listofPeople[i].firstName} ${listofPeople[i].lastName}\n`;
+    }
+  }
+  let personName = prompt("Please select from this group of people their first Name Seprated by their Last Name"+message);
+  for (let i = 0; i < listofPeople.length; i++)
+  {
+    if(listofPeople[i] != undefined)
+    {
+        if(personName == (listofPeople[i].firstName + " " + listofPeople[i].lastName))
+      {
+        return listofPeople[i];
+      }
+    }
+  }
+}
+
+
+
 
 /**
  * @summary takes an array of selected traits outputs collection of matching poeple.
@@ -244,13 +275,16 @@ function GenerateArrayOfTraits()
   let stringOfTraits = prompt("Seraching by Traits: please select the number associated with your choice seperated by a space:"+
   `${choices[0]}${choices[1]}${choices[2]}${choices[3]}${choices[4]}`);
   console.log(stringOfTraits);
+  let menuChoices = ["1", "2", "3", "4", "5"];
+  
   let arrayOfTraits = stringOfTraits.split(" ");
   let numarr = [];
   for (let i = 0; i < arrayOfTraits.length; i++)
   {
-    let userChoice = Validate(1, 5, arrayOfTraits[i]);
-    if(userChoice != -1)
+    let userChoice = Validate(menuChoices, arrayOfTraits[i]);
+    if(userChoice != false)
     {
+      userChoice = parseInt(userChoice);
       numarr[i] = userChoice;
     }
     else
@@ -378,5 +412,47 @@ function searchBySingleTraitStory(trait, people, traitParam)
 
 
 
+/**
+ * @summary Will return a person object
+ * @param {number} personId - The Id of a person
+ * @param {people} people - Database
+ * @returns Person Object. 
+ */
+function SearchForPersonWithId(personId, people)
+{
+  let parentList;
+  let param = "parents";
+  parentList = people.filter(function(item)
+  {
+    if(item.id == personId)
+    {
+      return item;
+    }
+  });
+  return parentList[param];
+}
 
 
+/**
+ * @summary Will return a user option or false when fed in a list and user choice of the same type.
+ * @param {Any} listOfOptions 
+ * @param {Any} userinput 
+ */
+function Validate(listOfOptions, userinput){
+
+  
+  let found = false;
+  for(let i = 0; i < listOfOptions.length; i++)
+  {
+    if(userinput == listOfOptions[i])
+    {
+      found = true;
+      return userinput;
+    }
+  }
+  if(found == false)
+  {
+    return false;
+  }
+
+}

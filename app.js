@@ -87,17 +87,20 @@ function mainMenu(person, people){
     case "family":
     // TODO: get person's family
 
-    let sib =people.filter(function(el) {if(person.parents==el.parents){return true;}
+    let sib =people.filter(function(el) {if(person.parents[0]==el.parents[0]||person.parents[0]==el.parents[1]||person.parents[1]==el.parents[0]||person.parents[1]==el.parents[1])
+      {
+        return true;
+      }
     else{return false;}
 
     });
-    alert("Parents :"+DisplayNameById(person.parents)+" "+"Siblings :"+" "+DisplayName(sib)+"Spouse :"
-    +" "+DisplayNameById(person.currentSpouse))
+    alert("Parents :"+DisplayNameById(person.parents,people)+" "+"Siblings :"+" "+DisplayName(sib)+"Spouse :"
+    +" "+DisplayNameById(person.currentSpouse,people))
     break;
     case "descendants":
     // TODO: get person's descendants
     let child=people.filter(function(el){
-      if( el.parents==person.id){
+      if(( el.parents[0]==person.id|| el.parents[1]==person.id)){
         return true;}
         else{
           return false;
@@ -105,13 +108,14 @@ function mainMenu(person, people){
 
     });
     let grands=people.filter(function(el){
-      if( el.parents==child.id){
+      if( el.parents[0]==child.id|| el.parents[1]==child.id){
         return true;}
         else{
           return false;
         }
     });
-    alert("Children:"+" "+child+"Any other known decendants :"+" "+grands)
+    alert("Children:"+" "+DisplayName(child))
+    alert("Any other decendants "+DisplayName(grands))
 
     break;
     case "restart":
@@ -248,7 +252,7 @@ function serachBytraits(arrayOfTraitsSelected, DatabaseOfPeople)
       if(arrayOfTraitsSelected[i] != -1)
       {
         let param = prompt(`Please Enter Criteria for: ${_traitDictionary[arrayOfTraitsSelected[i]]}`);
-        collectionOfPeopleMatchingSearch = serachBySingleTrait(arrayOfTraitsSelected[i], collectionOfPeopleMatchingSearch, param);
+        collectionOfPeopleMatchingSearch =searchBySingleTraitStory(arrayOfTraitsSelected[i], collectionOfPeopleMatchingSearch, param);
       }
     }
   }
@@ -321,15 +325,18 @@ function Validate(minoption, maxoption, userchoice)
 }
 function DisplayName(people){
   var i;
-  for (i = 0; i < people.length; i++) {
-  alert("First Name :"+" "+i.firstName+" "+ "Last Name :"+" "+i.lastName);
-}
-function DisplayNameById(id){
+  for (i = 0; i < people.length; i++) 
+  {if(people[i]!= undefined){
+  alert("First Name :"+" "+i.firstName+" "+ "Last Name :"+" "+i.lastName);}
+  else{ alert("Not found");}
+}}
+function DisplayNameById(id,people){
  
    let x=people.filter(function(el){
-    if(el.id==id){
+    if(el.id==id&& el!= undefined){
       alert("First Name :"+" "+el.firstName+" "+ "Last Name :"+" "+el.lastName);
     }
+    else{}
 
   })
 }
@@ -406,7 +413,7 @@ function searchBySingleTraitStory(trait, people, traitParam)
 
     return peopleList;
 }
-}
+
 
 
 

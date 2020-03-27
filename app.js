@@ -86,9 +86,13 @@ function mainMenu(person, people){
     break;
     case "family":
     // TODO: get person's family
-    let sib =people.parents==person.parents;
-    alert("Parents :"+person.parents+" "+"Siblings :"+" "+sib+"Spouse :"
-    +" "+person.currentSpouse)
+
+    let sib =people.filter(function(el) {if(person.parents==el.parents){return true;}
+    else{return false;}
+
+    });
+    alert("Parents :"+DisplayNameById(person.parents)+" "+"Siblings :"+" "+DisplayName(sib)+"Spouse :"
+    +" "+DisplayNameById(person.currentSpouse))
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -312,10 +316,30 @@ function Validate(minoption, maxoption, userchoice)
   {
     validatedChoice = choice; 
   }
-  return validatedChoice;
+
+  return choice;
+}
+function DisplayName(people){
+  var i;
+  for (i = 0; i < people.length; i++) {
+  alert("First Name :"+" "+i.firstName+" "+ "Last Name :"+" "+i.lastName);
+}
+function DisplayNameById(id){
+ 
+   let x=people.filter(function(el){
+    if(el.id==id){
+      alert("First Name :"+" "+el.firstName+" "+ "Last Name :"+" "+el.lastName);
+    }
+
+  })
 }
 
-/**
+
+
+
+
+
+/** 
  * @summary Takes an int value for trait, object for db, and string for trait param returns list matching results.
  * @param {Int32} trait - the numerical value that will be compared against in the dictionat
  * @param {data} people - The Collection of people to filter through;
@@ -382,6 +406,11 @@ function searchBySingleTraitStory(trait, people, traitParam)
 
     return peopleList;
 }
+}
+
+
+
+
 
 /**
  * @summary Will return a person object

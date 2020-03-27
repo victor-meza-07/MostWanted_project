@@ -359,7 +359,13 @@ function serachBySingleTrait(trait, people, traitParam)
   return listOfPeople;
 }
 
-//For UserStories Purposes:
+/**
+ * 
+ * @param {Number} param Number Representing the desired trait 
+ * @param {poeple} people Database Set 
+ * @param {Any} trait The parameter of the desired trait
+ * @returns A list of people matching the parameter. 
+ */
 function searchBySingleTraitStory(param, people, trait)
 {
   let match = _traitDictionary[param];
@@ -374,7 +380,12 @@ function searchBySingleTraitStory(param, people, trait)
     return peopleList;
 }
 
-
+/**
+ * @summary - Recomend using "SearchBySingleTraitStory"
+ * @param {Number} trait 
+ * @param {data} people 
+ * @param {String} traitParam 
+ */
 function serachBySingleTrait(trait, people, traitParam)
 {
   let listOfPeople = [];

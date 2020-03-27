@@ -446,19 +446,19 @@ function searchBySingleTraitStory(trait, people, traitParam)
       case "height":
         peopleList = people.map(function(item, index, array)
         {
-          {if(item != undefined){if(item.dob == traitParam)return item;}}
+          {if(item != undefined){if(item.height == traitParam)return item;}}
         });
         break;
       case "weight":
         peopleList = people.map(function(item, index, array)
         {
-          {if(item != undefined){if(item.dob == traitParam)return item;}}
+          {if(item != undefined){if(item.weight == traitParam)return item;}}
         });
         break;
       case "eyeColor":
         peopleList = people.map(function(item, index, array)
         {
-          {if(item != undefined){if(item.dob == traitParam)return item;}}
+          {if(item != undefined){if(item.eyeColor == traitParam)return item;}}
         });
         break;
       default:

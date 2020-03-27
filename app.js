@@ -221,8 +221,6 @@ function returnOnePerson (listofPeople)
 }
 
 
-
-
 /**
  * @summary takes an array of selected traits outputs collection of matching poeple.
  * @param {Int32Array} arrayOfTraitsSelected
@@ -248,7 +246,7 @@ function serachBytraits(arrayOfTraitsSelected, DatabaseOfPeople)
       if(arrayOfTraitsSelected[i] != -1)
       {
         let param = prompt(`Please Enter Criteria for: ${_traitDictionary[arrayOfTraitsSelected[i]]}`);
-        collectionOfPeopleMatchingSearch = serachBySingleTrait(arrayOfTraitsSelected[i], collectionOfPeopleMatchingSearch, param);
+        collectionOfPeopleMatchingSearch = searchBySingleTraitStory(arrayOfTraitsSelected[i], collectionOfPeopleMatchingSearch, param);
       }
     }
   }
@@ -409,8 +407,64 @@ function searchBySingleTraitStory(trait, people, traitParam)
 }
 
 
+function serachBySingleTrait(trait, people, traitParam)
+{
+  let listOfPeople = [];
+  let selectedTrait = _traitDictionary[trait];
+  for(let i = 0; i < people.length; i++)
+  {
+    if(selectedTrait == "gender"){if(people[i].gender == traitParam){listOfPeople[i] = people[i];}}
+    else if(selectedTrait == "dob"){if(people[i].dob == traitParam){listOfPeople[i] = people[i];}}
+    else if(selectedTrait == "height"){if(people[i].height == traitParam){listOfPeople[i] = people[i];}}
+    else if(selectedTrait == "weight"){if(people[i].weight == traitParam){listOfPeople[i] = people[i];}}
+    else if(selectedTrait == "eyeColor"){if(people[i].eyeColor == traitParam){listOfPeople[i] = people[i];}}
+  }
+  return listOfPeople;
+}
 
 
+//For UserStories Purposes:
+function searchBySingleTraitStory(trait, people, traitParam)
+{
+    let traitValue = _traitDictionary[trait];
+    let peopleList; peopleList = [];
+    switch(traitValue)
+    {
+      case "gender":
+        peopleList = people.map(function(item, index, array)
+        {
+          if(item.gender == traitParam){return item;}
+        });
+        break;
+      case "dob":
+        peopleList = people.map(function(item, index, array)
+        {
+          if(item.dob == traitParam){return item;}
+        });
+        break;
+      case "height":
+        peopleList = people.map(function(item, index, array)
+        {
+          if(item.height == traitParam){return item;}
+        });
+        break;
+      case "weight":
+        peopleList = people.map(function(item, index, array)
+        {
+          if(item.weight == traitParam){return item;}
+        });
+        break;
+      case "eyeColor":
+        peopleList = people.map(function(item, index, array)
+        {
+          if(item.eyeColor == traitParam){return item;}
+        });
+        break;
+      default:
+        break;
+    }
+    return peopleList;
+}
 
 /**
  * @summary Will return a person object

@@ -199,7 +199,7 @@ function serachBytraits(arrayOfTraitsSelected, DatabaseOfPeople)
 }
 
 /**
- * @summary Takes in user input, returns numerical array
+ * @summary collects in user input, returns numerical array
  * @returns {Int32Array} An Int32Array
  */
 function GenerateArrayOfTraits()
@@ -303,51 +303,33 @@ function serachBySingleTrait(trait, people, traitParam)
   return listOfPeople;
 }
 
-//For UserStories Purposes:
-function searchBySingleTraitStory(trait, people, traitParam)
+/**
+ * 
+ * @param {Number} param Number Representing the desired trait 
+ * @param {poeple} people Database Set 
+ * @param {Any} trait The parameter of the desired trait
+ * @returns A list of people matching the parameter. 
+ */
+function searchBySingleTraitStory(param, people, trait)
 {
-    let traitValue = _traitDictionary[trait];
-    let peopleList; peopleList = [];
-    switch(traitValue)
+  let match = _traitDictionary[param];
+  let peopleList = [];
+  peopleList  = people.map(function(item){
+    if(item[match] == trait){return item;}
+    })
+    .filter(function(item)
     {
-      case "gender":
-        peopleList = people.map(function(item, index, array)
-        {
-          if(item.gender == traitParam){return item;}
-        });
-        break;
-      case "dob":
-        peopleList = people.map(function(item, index, array)
-        {
-          if(item.dob == traitParam){return item;}
-        });
-        break;
-      case "height":
-        peopleList = people.map(function(item, index, array)
-        {
-          if(item.height == traitParam){return item;}
-        });
-        break;
-      case "weight":
-        peopleList = people.map(function(item, index, array)
-        {
-          if(item.weight == traitParam){return item;}
-        });
-        break;
-      case "eyeColor":
-        peopleList = people.map(function(item, index, array)
-        {
-          if(item.eyeColor == traitParam){return item;}
-        });
-        break;
-      default:
-        break;
-    }
-
+      if(item != undefined){return item;}
+    });
     return peopleList;
 }
 
-
+/**
+ * @summary - Recomend using "SearchBySingleTraitStory"
+ * @param {Number} trait 
+ * @param {data} people 
+ * @param {String} traitParam 
+ */
 function serachBySingleTrait(trait, people, traitParam)
 {
   let listOfPeople = [];
@@ -364,49 +346,6 @@ function serachBySingleTrait(trait, people, traitParam)
 }
 
 
-//For UserStories Purposes:
-function searchBySingleTraitStory(trait, people, traitParam)
-{
-    let traitValue = _traitDictionary[trait];
-    let peopleList; peopleList = [];
-    switch(traitValue)
-    {
-      case "gender":
-        peopleList = people.map(function(item, index, array)
-        {
-          {if(item != undefined){if(item.gender == traitParam)return item;}}
-        });
-        break;
-      case "dob":
-        peopleList = people.map(function(item, index, array)
-        {
-          {if(item != undefined){if(item.dob == traitParam)return item;}}
-        });
-        break;
-      case "height":
-        peopleList = people.map(function(item, index, array)
-        {
-          {if(item != undefined){if(item.height == traitParam)return item;}}
-        });
-        break;
-      case "weight":
-        peopleList = people.map(function(item, index, array)
-        {
-          {if(item != undefined){if(item.weight == traitParam)return item;}}
-        });
-        break;
-      case "eyeColor":
-        peopleList = people.map(function(item, index, array)
-        {
-          {if(item != undefined){if(item.eyeColor == traitParam)return item;}}
-        });
-        break;
-      default:
-        break;
-    }
-    return peopleList;
-}
-
 /**
  * @summary Will return a person object
  * @param {number} personId - The Id of a person
@@ -415,16 +354,12 @@ function searchBySingleTraitStory(trait, people, traitParam)
  */
 function SearchForPersonWithId(personId, people)
 {
-  let parentList;
-  let param = "parents";
-  parentList = people.filter(function(item)
+  let person = people.filter(function(item)
   {
-    if(item.id == personId)
-    {
-      return item;
-    }
+    if(item.id == personId){return item;}
   });
-  return parentList[param];
+
+  return person;
 }
 
 

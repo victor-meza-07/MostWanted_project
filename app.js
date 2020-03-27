@@ -22,6 +22,7 @@ function app(people)
     app(people); // restart app
       break;
   }
+
 }
  
 
@@ -86,7 +87,7 @@ function mainMenu(person, people){
     else{return false;}
 
     });
-    alert("Parents :"+DisplayNamebyId(person.parents)+" "+"Siblings :"+" "+DisplayName(sib)+"Spouse :"
+    alert("Parents :"+DisplayNameById(person.parents)+" "+"Siblings :"+" "+DisplayName(sib)+"Spouse :"
     +" "+DisplayNameById(person.currentSpouse))
     break;
     case "descendants":
@@ -290,7 +291,7 @@ function DisplayName(people){
   alert("First Name :"+" "+i.firstName+" "+ "Last Name :"+" "+i.lastName);
 }
 function DisplayNameById(id){
- if(id!=null) {
+ 
    let x=people.filter(function(el){
     if(el.id==id){
       alert("First Name :"+" "+el.firstName+" "+ "Last Name :"+" "+el.lastName);
@@ -298,19 +299,19 @@ function DisplayNameById(id){
 
   })
 }
-else { return mainMenu(person, people)}
-}
 
 
 
 
-/*
+
+
+/** 
  * @summary Takes an int value for trait, object for db, and string for trait param returns list matching results.
  * @param {Int32} trait - the numerical value that will be compared against in the dictionat
  * @param {data} people - The Collection of people to filter through;
  * @param {any} traitParam - The Parameter of the trait.
  * @returns A list of people mathing your search from this list. 
- 
+ */
 function serachBySingleTrait(trait, people, traitParam)
 {
   let listOfPeople = [];
@@ -371,17 +372,11 @@ function searchBySingleTraitStory(trait, people, traitParam)
 
     return peopleList;
 }
-
-
-function test (people)
-{
-  let a = searchBySingleTraitStory(1, people, "male");
-  let message; message = "";
-  for(let i = 0; i < a.length; i++)
-  {
-    if (a[i] != undefined){message += (displayPerson(a[i]));}
-  }
-
-  console.log(message);
-  alert(message);*/
 }
+
+
+
+
+
+
+

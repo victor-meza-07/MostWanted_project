@@ -13,7 +13,7 @@ function app(people)
   let searchResults;
   switch(searchType){
     case 'yes':
-      searchResults = searchByName(people);
+      searchResults = returnOnePerson(people);
       break;
     case 'no':
       let arrayOfTraits = GenerateArrayOfTraits();
@@ -39,7 +39,7 @@ function SearchByName()
     displayPerson(filterPeople);
     person = filterPeople;
   }
-  if(searchType === "no"){
+  if(searchType === "no"){ 
     filterPeople = selectPersonFromSearch();
     firstname = filterPeople[0];
     lastName = filterPeople[1];

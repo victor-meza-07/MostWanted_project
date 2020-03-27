@@ -243,7 +243,7 @@ function serachBytraits(arrayOfTraitsSelected, DatabaseOfPeople)
         alert("You will be prompted for the parameters");
         messageShown = true;
       }
-      if(arrayOfTraitsSelected[i] != -1)
+      if(arrayOfTraitsSelected[i] != -1 && arrayOfTraitsSelected[i] != undefined)
       {
         let param = prompt(`Please Enter Criteria for: ${_traitDictionary[arrayOfTraitsSelected[i]]}`);
         collectionOfPeopleMatchingSearch = searchBySingleTraitStory(arrayOfTraitsSelected[i], collectionOfPeopleMatchingSearch, param);
@@ -434,31 +434,31 @@ function searchBySingleTraitStory(trait, people, traitParam)
       case "gender":
         peopleList = people.map(function(item, index, array)
         {
-          if(item.gender == traitParam){return item;}
+          {if(item != undefined){if(item.gender == traitParam)return item;}}
         });
         break;
       case "dob":
         peopleList = people.map(function(item, index, array)
         {
-          if(item.dob == traitParam){return item;}
+          {if(item != undefined){if(item.dob == traitParam)return item;}}
         });
         break;
       case "height":
         peopleList = people.map(function(item, index, array)
         {
-          if(item.height == traitParam){return item;}
+          {if(item != undefined){if(item.dob == traitParam)return item;}}
         });
         break;
       case "weight":
         peopleList = people.map(function(item, index, array)
         {
-          if(item.weight == traitParam){return item;}
+          {if(item != undefined){if(item.dob == traitParam)return item;}}
         });
         break;
       case "eyeColor":
         peopleList = people.map(function(item, index, array)
         {
-          if(item.eyeColor == traitParam){return item;}
+          {if(item != undefined){if(item.dob == traitParam)return item;}}
         });
         break;
       default:

@@ -29,11 +29,6 @@ function app(people){
     app(people); // restart app
       break;
   }
-  /**
-@summary (brief decription)
-@param - the parameters it takes in
-*/
-}
   if (searchType === "yes"){
     firstName = filterPeople.firstName;
     lastName = filterPeople.lastName;
@@ -41,7 +36,7 @@ function app(people){
     person = filterPeople;
   }
   if(searchType === "no"){
-    filterPeople = selectPersonFromSearch();
+    filterPeople = selectPersonFromSearch(people);
     firstname = filterPeople[0];
     lastName = filterPeople[1];
   }

@@ -18,11 +18,15 @@ function app(people)
     case 'no':
       let arrayOfTraits = GenerateArrayOfTraits();
       searchResults = serachBytraits(arrayOfTraits, people);
+      searchResults = returnOnePerson(searchResults);
       break;
       default:
     app(people); // restart app
       break;
   }
+
+  mainMenu(searchResults, people);
+
 }
  
 
@@ -188,6 +192,32 @@ function chars(input){
 
 
 /*Victor's Logic*/
+
+function returnOnePerson (listofPeople)
+{
+  let message = "\n";
+  for (let i = 0; i < listofPeople.length; i++)
+  {
+    if(listofPeople[i] != undefined)
+    {
+      message += `${listofPeople[i].firstName} ${listofPeople[i].lastName}\n`;
+    }
+  }
+  let personName = prompt("Please select from this group of people their first Name Seprated by their Last Name"+message);
+  for (let i = 0; i < listofPeople.length; i++)
+  {
+    if(listofPeople[i] != undefined)
+    {
+        if(personName == (listofPeople[i].firstName + " " + listofPeople[i].lastName))
+      {
+        return listofPeople[i];
+      }
+    }
+  }
+}
+
+
+
 
 /**
  * @summary takes an array of selected traits outputs collection of matching poeple.
@@ -396,11 +426,4 @@ function Validate(listOfOptions, userinput){
     return false;
   }
 
-}
-
-
-
-function test (people)
-{
-  
 }

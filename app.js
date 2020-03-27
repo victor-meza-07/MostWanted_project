@@ -317,11 +317,13 @@ function Validate(minoption, maxoption, userchoice)
 
   return choice;
 }
+
 function DisplayName(people){
   var i;
   for (i = 0; i < people.length; i++) {
   alert("First Name :"+" "+i.firstName+" "+ "Last Name :"+" "+i.lastName);
-}
+}}
+
 function DisplayNameById(id){
  
    let x=people.filter(function(el){
@@ -329,7 +331,7 @@ function DisplayNameById(id){
       alert("First Name :"+" "+el.firstName+" "+ "Last Name :"+" "+el.lastName);
     }
 
-  })
+  });
 }
 
 
@@ -403,7 +405,6 @@ function searchBySingleTraitStory(trait, people, traitParam)
     }
 
     return peopleList;
-}
 }
 
 

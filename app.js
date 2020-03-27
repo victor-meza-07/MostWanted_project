@@ -13,7 +13,7 @@ function app(people)
   let searchResults;
   switch(searchType){
     case 'yes':
-      searchResults = searchByName(people);
+      searchResults = returnOnePerson(people);
       break;
     case 'no':
       let arrayOfTraits = GenerateArrayOfTraits();
@@ -39,7 +39,7 @@ function SearchByName()
     displayPerson(filterPeople);
     person = filterPeople;
   }
-  if(searchType === "no"){
+  if(searchType === "no"){ 
     filterPeople = selectPersonFromSearch();
     firstname = filterPeople[0];
     lastName = filterPeople[1];
@@ -225,8 +225,6 @@ function returnOnePerson (listofPeople)
 }
 
 
-
-
 /**
  * @summary takes an array of selected traits outputs collection of matching poeple.
  * @param {Int32Array} arrayOfTraitsSelected
@@ -249,10 +247,10 @@ function serachBytraits(arrayOfTraitsSelected, DatabaseOfPeople)
         alert("You will be prompted for the parameters");
         messageShown = true;
       }
-      if(arrayOfTraitsSelected[i] != -1)
+      if(arrayOfTraitsSelected[i] != -1 && arrayOfTraitsSelected[i] != undefined)
       {
         let param = prompt(`Please Enter Criteria for: ${_traitDictionary[arrayOfTraitsSelected[i]]}`);
-        collectionOfPeopleMatchingSearch =searchBySingleTraitStory(arrayOfTraitsSelected[i], collectionOfPeopleMatchingSearch, param);
+        collectionOfPeopleMatchingSearch = searchBySingleTraitStory(arrayOfTraitsSelected[i], collectionOfPeopleMatchingSearch, param);
       }
     }
   }
@@ -323,6 +321,7 @@ function Validate(minoption, maxoption, userchoice)
 
   return choice;
 }
+
 function DisplayName(people){
   var i;
   for (i = 0; i < people.length; i++) 
@@ -338,7 +337,7 @@ function DisplayNameById(id,people){
     }
     else{}
 
-  })
+  });
 }
 
 
@@ -415,9 +414,64 @@ function searchBySingleTraitStory(trait, people, traitParam)
 }
 
 
+function serachBySingleTrait(trait, people, traitParam)
+{
+  let listOfPeople = [];
+  let selectedTrait = _traitDictionary[trait];
+  for(let i = 0; i < people.length; i++)
+  {
+    if(selectedTrait == "gender"){if(people[i].gender == traitParam){listOfPeople[i] = people[i];}}
+    else if(selectedTrait == "dob"){if(people[i].dob == traitParam){listOfPeople[i] = people[i];}}
+    else if(selectedTrait == "height"){if(people[i].height == traitParam){listOfPeople[i] = people[i];}}
+    else if(selectedTrait == "weight"){if(people[i].weight == traitParam){listOfPeople[i] = people[i];}}
+    else if(selectedTrait == "eyeColor"){if(people[i].eyeColor == traitParam){listOfPeople[i] = people[i];}}
+  }
+  return listOfPeople;
+}
 
 
-
+//For UserStories Purposes:
+function searchBySingleTraitStory(trait, people, traitParam)
+{
+    let traitValue = _traitDictionary[trait];
+    let peopleList; peopleList = [];
+    switch(traitValue)
+    {
+      case "gender":
+        peopleList = people.map(function(item, index, array)
+        {
+          {if(item != undefined){if(item.gender == traitParam)return item;}}
+        });
+        break;
+      case "dob":
+        peopleList = people.map(function(item, index, array)
+        {
+          {if(item != undefined){if(item.dob == traitParam)return item;}}
+        });
+        break;
+      case "height":
+        peopleList = people.map(function(item, index, array)
+        {
+          {if(item != undefined){if(item.height == traitParam)return item;}}
+        });
+        break;
+      case "weight":
+        peopleList = people.map(function(item, index, array)
+        {
+          {if(item != undefined){if(item.weight == traitParam)return item;}}
+        });
+        break;
+      case "eyeColor":
+        peopleList = people.map(function(item, index, array)
+        {
+          {if(item != undefined){if(item.eyeColor == traitParam)return item;}}
+        });
+        break;
+      default:
+        break;
+    }
+    return peopleList;
+}
 
 /**
  * @summary Will return a person object

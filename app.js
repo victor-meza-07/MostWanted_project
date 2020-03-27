@@ -442,3 +442,12 @@ function Validate(listOfOptions, userinput){
   }
 
 }
+
+
+
+//UI Logic
+
+function captureUserInput(poepleDb)
+{
+
+}

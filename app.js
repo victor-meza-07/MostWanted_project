@@ -449,5 +449,16 @@ function Validate(listOfOptions, userinput){
 
 function captureUserInput(poepleDb)
 {
+  let name = document.getElementById("SrchName").value;
+  let age = document.getElementById("SrchAge").value;
+  let weight = document.getElementById("SrchWeight").value;
+  let height = document.getElementById("SrchHeight").value;
+  let eyeColor = document.getElementById("SrchEyeColor").value;
+  let occupation = document.getElementById("SrchOcc").value;
 
+  let collectionOfFields = [name, age, weight, height, eyeColor, occupation];
+  let filteredCollection = collectionOfFields.filter(function(item){
+    if(item != null){return item;}
+  });
+  console.log(filteredCollection);
 }

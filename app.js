@@ -454,6 +454,8 @@ function captureUserInput(poepleDb)
   let finalList = convertValuesOfFields(validatedCollection);//This is a list of the types converted to the expected formats.
   let listOfMatches = SearchByTraitsFields(finalList, poepleDb);
   console.log(listOfMatches);
+  let table = GenerateTableLayoutWithValues(listOfMatches);
+  DisplayTable(table);
 }
 
 function validateInputAnswers(listWithRawInput)
@@ -548,6 +550,66 @@ function searchByName(firstName, lastName, listOfPeople)
     }
   });
   return matches;
+}
+
+
+function GenerateTableLayoutWithValues(peopleList)
+{
+  let table = '';
+  let rows = peopleList.length; // a row per person;
+  let cols = 8; // coloumns for data :)
+  table += "<thead><tr><th>Name</th><th>Gender</th><th>DoB</th><th>Height</th><th>Weight</th><th>Eye Color</th><th>Details</th></tr></thead>";
+  table += "<tbody>";
+  for(let r = 0; r < rows; r++)
+  {
+    table += '<tr>';
+      for(let c = 0; c < cols; c++)
+      {
+        switch(c)
+        {
+          case 0:
+            table += ('<td>' + peopleList[r].firstName + " " + peopleList[r].lastName + '</td>');
+            break;
+          case 1:
+            table += ('<td>' + peopleList[r].gender + '</td>');
+            break;
+          case 2:
+            table += ('<td>' + peopleList[r].dob + '</td>');
+            break;
+          case 3:
+            table += ('<td>' + peopleList[r].height + '</td>');
+            break;
+          case 4:
+            table += ('<td>' + peopleList[r].weight + '</td>');
+            break;
+          case 5:
+            table += ('<td>' + peopleList[r].eyeColor + '</td>');
+            break;
+          case 6:
+            table += ('<td>' + `<button type="button" onclick="fetchDetailsFromUI(${peopleList[r].id},data)">Details</button>` + '</td>');
+            break;
+        }
+      }
+  }
+  table += "</tbody>";
+  return table;
+}
+
+function DisplayTable(tableHtml)
+{
+  let tHtml = `<table class="table table-hover">${tableHtml}</table>`;
+  let finalHtml = `<div class="row justify-content-center">${tHtml}</div>`;
+
+  document.getElementById("DynamicContent").innerHTML = finalHtml;
+}
+
+function fetchDetailsFromUI(idFromDb, db)
+{
+  let person = db.filter(function(item){
+    if(item.id == idFromDb){return item;}
+  });
+
+  console.log(person[0]);
 }
 
 

@@ -3,7 +3,7 @@
 Build all of your functions for displaying and gathering information below (GUI).
 */
 
-var _traitDictionary = {1:"gender", 2:"dob", 3:"height", 4:"weight", 5:"eyeColor"}
+var _traitDictionary = {1:"gender", 2:"dob", 3:"height", 4:"weight", 5:"eyeColor", 6: "occupation"}
 
 
 // app is the function called to start the entire application
@@ -412,25 +412,143 @@ function findDecendants(person, people)
 
 }
 
+
+
+function SearchByTraitsFields(CollectionOfTraitsAndParams, CollectionofPeople)
+{
+  let listOfMathches = CollectionofPeople;
+  for(let i = 0; i < CollectionOfTraitsAndParams.length; i++)
+  {
+    if(CollectionOfTraitsAndParams[i].type == 7)
+    {
+      //split the name;
+      let name = CollectionOfTraitsAndParams[i].value.split(" ");
+      listOfMathches = searchByName(name[0], name[1], listOfMathches);
+    }
+    else
+    {
+      listOfMathches = searchBySingleTraitStory(CollectionOfTraitsAndParams[i].type, listOfMathches, CollectionOfTraitsAndParams[i].value);
+    }
+  }
+  return listOfMathches;
+}
+
 function captureUserInput(poepleDb)
 {
-  let name = document.getElementById("SrchName").value;
-  let age = document.getElementById("SrchAge").value;
-  let weight = document.getElementById("SrchWeight").value;
-  let height = document.getElementById("SrchHeight").value;
-  let eyeColor = document.getElementById("SrchEyeColor").value;
-  let occupation = document.getElementById("SrchOcc").value;
+  let name = {value: document.getElementById("SrchName").value, type:7}
+  let gender = {value: document.getElementById("SrchGndr").value, type:1}
+  let age = {value: document.getElementById("SrchDoB").value, type:2}
+  let weight = {value: document.getElementById("SrchWeight").value, type:3}
+  let height = {value: document.getElementById("SrchHeight").value, type:4}
+  let eyeColor = {value: document.getElementById("SrchEyeColor").value, type:5}
+  let occupation = {value: document.getElementById("SrchOcc").value, type:6}
 
-  let collectionOfFields = [name, age, weight, height, eyeColor, occupation];
+  let collectionOfFields = [name, age, weight, height, eyeColor, occupation,gender];
   let filteredCollection = collectionOfFields.filter(function(item){
-    if(item != null){return item;}
+    if(item.value != null && item.value != ""){return item;}
   });
   console.log(filteredCollection);
+
+  filteredCollection.forEach(function(item){console.log(item.type+" "+item.value);});
+  let validatedCollection = validateInputAnswers(filteredCollection);
+  let finalList = convertValuesOfFields(validatedCollection);//This is a list of the types converted to the expected formats.
+  let listOfMatches = SearchByTraitsFields(finalList, poepleDb);
+  console.log(listOfMatches);
 }
- 
 
+function validateInputAnswers(listWithRawInput)
+{
+  let validatedCollection = listWithRawInput.map(function(item){
+    switch(item.type)
+    {
+      case 1:
+        try{item.value.toString(); return item;}
+        catch(err){/*do nothing*/}
+        break;
+      case 2:
+        try{item.value.toString(); return item;}
+        catch(err){/*do nothing*/}
+        break;
+      case 3:
+        try{parseInt(item.value); return item;}
+        catch(err){console.log(err);}
+        break;
+      case 4:
+        try{parseInt(item.value); return item;}
+        catch(err){console.log(err);}
+        break;
+      case 5:
+        try{item.value.toString(); return item;}
+        catch(err){/*do nothing*/}
+        break;
+      case 6:
+        try{item.value.toString(); return item;}
+        catch(err){/*do nothing*/}
+        break;
+      case 7:
+        try{item.value.toString(); return item;}
+        catch(err){/*do nothing*/}
+        break;
+      default:
+        break;
+    }
+  });
+  return validatedCollection;
+}
 
+function convertValuesOfFields(validatedCollection)
+{
+  let finalList = validatedCollection.map(function(item)
+  {
+    switch(item.type)
+    {
+      case 1:
+        try{item.value.toString(); return {value: item.value.toString(), type: 1}}
+        catch(err){console.log(err);}
+        break;
+      case 2:
+        try{item.value.toString(); return {value: item.value.toString(), type: 2}}
+        catch(err){/*do nothing*/}
+        break;
+      case 3:
+        try{parseInt(item.value); return {value: parseInt(item.value), type: 3}}
+        catch(err){console.log(err);}
+        break;
+      case 4:
+        try{parseInt(item.value); return {value: parseInt(item).value, type:4}}
+        catch(err){console.log(err);}
+        break;
+      case 5:
+        try{item.value.toString(); return {value: item.value.toString(), type:5}}
+        catch(err){/*do nothing*/}
+        break;
+      case 6:
+        try{item.value.toString(); return {value: item.value.toString(), type:6}}
+        catch(err){/*do nothing*/}
+        break;
+      case 7:
+        try{item.value.toString(); return {value: item.value.toString(), type:7}}
+        catch(err){/*do nothing*/}
+        break;
+      default:
+        break;
+    }
+  });
+  return finalList;
+}
 
+function searchByName(firstName, lastName, listOfPeople)
+{
+  let fullName = firstName + lastName;
+  let matches = listOfPeople.filter(function(item)
+  {
+    if(item.firstName+item.lastName == fullName)
+    {
+      return item;
+    }
+  });
+  return matches;
+}
 
 
 function findFamily(person, people){

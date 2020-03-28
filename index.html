@@ -15,6 +15,7 @@
       </div>
       <div class="row justify-content-center">
           <label>Search for a criminal</label>
+          <p>Please note: this is an exclusive search</p>
       </div>
       <form>
         <div class="row justify-content-center">
@@ -22,7 +23,7 @@
                   <input class="form-control" type="text" placeholder="Search by Name" name="search" id="SrchName">
                 </div>
                 <div class="md-form active-pink-2 mb-3 customBar">
-                  <input class="form-control" type="text" placeholder="Search by Age" name="search" id="SrchAge">
+                  <input class="form-control" type="text" placeholder="Search by Date of Birth" name="search" id="SrchDoB">
                 </div>
                 <div class="md-form active-pink-2 mb-3">
                   <input class="form-control" type="text" placeholder="Search by Weight" name="search" id="SrchWeight">
@@ -40,6 +41,12 @@
                    <input class="form-control" type="text" placeholder="Search by Occupation" name="search" id="SrchOcc">
                  </div>
         </div>
+        <div class="row justify-content-center">
+          <div class="md-form active-pink-2 mb-3 customBar">
+            <input class="form-control" type="text" placeholder="Search by Gender" name="search" id="SrchGndr">
+           </div>
+        </div>
+        
         <div class="row justify-content-center">
           <button type="submit" class="btn btn-primary" onclick="captureUserInput(data)">Search</button>
         </div>

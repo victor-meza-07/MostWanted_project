@@ -3,7 +3,7 @@
 Build all of your functions for displaying and gathering information below (GUI).
 */
 
-var _traitDictionary = {1:"gender", 2:"dob", 3:"height", 4:"weight", 5:"eyeColor", 6: "occupation"}
+var _traitDictionary = {1:"gender", 2:"dob", 4:"height", 3:"weight", 5:"eyeColor", 6: "occupation"}
 const _imagesOfCriminals = {
   272822514:`https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/BillyBobThorntonHWOFFeb2012crop.JPG/220px-BillyBobThorntonHWOFFeb2012crop.JPG`,
   401222887:`https://designpress-10674.kxcdn.com/wp-content/uploads/2015/02/Uma-Thurman-Hairstyles-7.jpg`,
@@ -540,7 +540,7 @@ function convertValuesOfFields(validatedCollection)
         catch(err){console.log(err);}
         break;
       case 4:
-        try{parseInt(item.value); return {value: parseInt(item).value, type:4}}
+        try{parseInt(item.value); return {value: parseInt(item.value), type:4}}
         catch(err){console.log(err);}
         break;
       case 5:

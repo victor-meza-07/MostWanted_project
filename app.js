@@ -609,7 +609,7 @@ function GenerateTableLayoutWithValues(peopleList)
             table += ('<td>' + peopleList[r].eyeColor + '</td>');
             break;
           case 6:
-            table += ('<td>' + `<button type="button" onclick="fetchDetailsFromUI(${peopleList[r].id},data)">Details</button>` + '</td>');
+            table += ('<td>' + `<button type="button" class="btn btn-info" onclick="fetchDetailsFromUI(${peopleList[r].id},data)">Details</button>` + '</td>');
             break;
         }
       }

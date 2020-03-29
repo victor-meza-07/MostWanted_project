@@ -520,7 +520,7 @@ function captureUserInput(poepleDb)
   }
   else
   {
-    if(ObjectHoldingValidFieldsAndErrorFields.CollectionOfErrors[0] != undefined)
+    if((ObjectHoldingValidFieldsAndErrorFields.CollectionOfErrors[0] != undefined) && ObjectHoldingValidFieldsAndErrorFields.CollectionOfValids.length > 0)
     {
       let error = ``
       let warning = ``;
@@ -536,8 +536,26 @@ function captureUserInput(poepleDb)
     }
     else
     {
-      let table = GenerateTableLayoutWithValues(listOfMatches);
-      DisplayTable(table);
+      if(ObjectHoldingValidFieldsAndErrorFields.CollectionOfValids.length > 0)
+      {
+        ClearDynamicElementUI();
+        let table = GenerateTableLayoutWithValues(listOfMatches);
+        DisplayTable(table);
+      }
+      else
+      {
+        //this is where we just display the warning.
+        ClearDynamicElementUI();
+        let warning = ``;
+        let error = ``;
+        error = GenerateError(listOfMatches);
+        let error_html = GenerateHtmlForError(error);
+        warning = GenerateWarning();
+        let warning_html = GenerateWarningHtml(warning);
+
+        let table_html = "";
+        DisplayTableWithWarning(error_html, warning_html, table_html);
+      }
     }
   }
 }

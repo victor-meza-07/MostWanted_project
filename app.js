@@ -453,7 +453,7 @@ function SearchByTraitsFields(CollectionOfTraitsAndParams, CollectionofPeople)
       listOfMathches = searchBySingleTraitStory(CollectionOfTraitsAndParams[i].type, listOfMathches, CollectionOfTraitsAndParams[i].value);
     }
   }
-  return listOfMathches;
+  if(CollectionOfTraitsAndParams.length != 0) { return listOfMathches;}
 }
 
 function captureUserInput(poepleDb)
@@ -477,8 +477,22 @@ function captureUserInput(poepleDb)
   let finalList = convertValuesOfFields(validatedCollection);//This is a list of the types converted to the expected formats.
   let listOfMatches = SearchByTraitsFields(finalList, poepleDb);
   console.log(listOfMatches);
-  let table = GenerateTableLayoutWithValues(listOfMatches);
-  DisplayTable(table);
+
+  //Checking for an empty list, as there has been no matches
+  if(listOfMatches == undefined)
+  {
+    console.log("List returned with no matches")
+    let error = GenerateError(listOfMatches);
+    let errorHtml = GenerateHtmlForError(error);
+    DisplayErrorToUI(errorHtml);
+  }
+  else
+  {
+    //we should add something to check if the list returned ignored some of the parameters;
+    //and throw a warning if that's the case.
+    let table = GenerateTableLayoutWithValues(listOfMatches);
+    DisplayTable(table);
+  }
 }
 
 function validateInputAnswers(listWithRawInput)
@@ -573,6 +587,27 @@ function searchByName(firstName, lastName, listOfPeople)
     }
   });
   return matches;
+}
+
+function GenerateError(object)
+{
+  //this is where have to keep track of what errors we expect for what objects
+  //ListOfMatches Errors
+  if(object == undefined)
+  {
+    return `The search paramaters returned no matches`;
+  }
+}
+
+function GenerateHtmlForError(error)
+{
+  let html = `<div class="alert alert-danger"><strong>Error:</strong> ${error}</div>`;
+  return html;
+}
+
+function DisplayErrorToUI(htmlForError)
+{
+  document.getElementById("DynamicContent").innerHTML = htmlForError;
 }
 
 

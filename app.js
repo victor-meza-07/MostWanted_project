@@ -4,6 +4,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 */
 
 var _traitDictionary = {1:"gender", 2:"dob", 4:"height", 3:"weight", 5:"eyeColor", 6: "occupation"}
+var ObjectHoldingValidFieldsAndErrorFields = {CollectionOfValids: [], CollectionOfErrors: []};
 const _imagesOfCriminals = {
   272822514:`https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/BillyBobThorntonHWOFFeb2012crop.JPG/220px-BillyBobThorntonHWOFFeb2012crop.JPG`,
   401222887:`https://designpress-10674.kxcdn.com/wp-content/uploads/2015/02/Uma-Thurman-Hairstyles-7.jpg`,
@@ -440,6 +441,7 @@ function findDecendants(person, people)
 function SearchByTraitsFields(CollectionOfTraitsAndParams, CollectionofPeople)
 {
   let listOfMathches = CollectionofPeople;
+  let savedWorkingMatches_ = CollectionofPeople;
   for(let i = 0; i < CollectionOfTraitsAndParams.length; i++)
   {
     if(CollectionOfTraitsAndParams[i].type == 7)
@@ -447,17 +449,47 @@ function SearchByTraitsFields(CollectionOfTraitsAndParams, CollectionofPeople)
       //split the name;
       let name = CollectionOfTraitsAndParams[i].value.split(" ");
       listOfMathches = searchByName(name[0], name[1], listOfMathches);
+      //Some validation
+      if(listOfMathches[0] != undefined)
+      {
+        ObjectHoldingValidFieldsAndErrorFields.CollectionOfValids.push(CollectionOfTraitsAndParams[i]);
+        savedWorkingMatches_ = listOfMathches;
+      }
+      else
+      {
+        ObjectHoldingValidFieldsAndErrorFields.CollectionOfErrors.push(CollectionOfTraitsAndParams[i]);
+        listOfMathches = savedWorkingMatches_; 
+      }
     }
     else
     {
       listOfMathches = searchBySingleTraitStory(CollectionOfTraitsAndParams[i].type, listOfMathches, CollectionOfTraitsAndParams[i].value);
+
+      //Some validation
+      if(listOfMathches[0] != undefined)
+      {
+        ObjectHoldingValidFieldsAndErrorFields.CollectionOfValids.push(CollectionOfTraitsAndParams[i]);
+        savedWorkingMatches_ = listOfMathches;
+      }
+      else
+      {
+        ObjectHoldingValidFieldsAndErrorFields.CollectionOfErrors.push(CollectionOfTraitsAndParams[i]);
+        listOfMathches = savedWorkingMatches_;
+      }
     }
   }
-  if(CollectionOfTraitsAndParams.length != 0) { return listOfMathches;}
+  if(CollectionOfTraitsAndParams.length != 0) 
+    {  
+      return listOfMathches;
+    }
 }
 
 function captureUserInput(poepleDb)
 {
+  //this function will hold a {var} that will be used in validation and error genration, please do not change type
+  ObjectHoldingValidFieldsAndErrorFields.CollectionOfErrors = [];
+  ObjectHoldingValidFieldsAndErrorFields.CollectionOfValids = [];
+
   let name = {value: document.getElementById("SrchName").value, type:7}
   let gender = {value: document.getElementById("SrchGndr").value, type:1}
   let age = {value: document.getElementById("SrchDoB").value, type:2}
@@ -488,10 +520,25 @@ function captureUserInput(poepleDb)
   }
   else
   {
-    //we should add something to check if the list returned ignored some of the parameters;
-    //and throw a warning if that's the case.
-    let table = GenerateTableLayoutWithValues(listOfMatches);
-    DisplayTable(table);
+    if(ObjectHoldingValidFieldsAndErrorFields.CollectionOfErrors[0] != undefined)
+    {
+      let error = ``
+      let warning = ``;
+      let table = ``;
+      ClearDynamicElementUI();
+      error = GenerateError(listOfMatches);
+      let error_html = GenerateHtmlForError(error);
+      warning = GenerateWarning();
+      let warning_html = GenerateWarningHtml(warning);
+      table = GenerateTableLayoutWithValues(listOfMatches);
+      let table_html = GenerateTableHtml_New(table);
+      DisplayTableWithWarning(error_html, warning_html, table_html);
+    }
+    else
+    {
+      let table = GenerateTableLayoutWithValues(listOfMatches);
+      DisplayTable(table);
+    }
   }
 }
 
@@ -602,7 +649,10 @@ function GenerateError(object)
   {
     error += `The search yielded no results due to one or more parameters <strong>try to widen your search</strong>\n`
   }
-
+  else
+  {
+    error += `Some fields held invalid data more info below\n`;
+  }
   return error;
 }
 
@@ -617,6 +667,43 @@ function DisplayErrorToUI(htmlForError)
   document.getElementById("DynamicContent").innerHTML = htmlForError;
 }
 
+
+function ClearDynamicElementUI()
+{
+  document.getElementById("DynamicContent").innerHTML="";
+}
+
+function GenerateWarning()
+{
+  let collectionOfReadableFields = {1:"Gender", 2:"DoB", 4:"Height", 3:"Weight", 5:"Eye Color", 6: "Occupation", 7: "Name"}
+  let warning = ``;
+  for(let i = 0; i < ObjectHoldingValidFieldsAndErrorFields.CollectionOfErrors.length; i++)
+  {
+    //might have to save string of numerical type up here to avoid a super long message?
+    warning += `A field <strong> ${collectionOfReadableFields[ObjectHoldingValidFieldsAndErrorFields.CollectionOfErrors[i].type]} </strong> had invalid data: <strong>${ObjectHoldingValidFieldsAndErrorFields.CollectionOfErrors[i].value}</strong> and was ignored in the search<br>`;
+  }
+  return warning;
+}
+
+function GenerateWarningHtml(warning)
+{
+  let html = `<div class="alert alert-warning">${warning}</div>`;
+  return html; 
+}
+
+function GenerateTableHtml_New(tableHtml)
+{
+  let tHtml = `<table class="table table-hover">${tableHtml}</table>`;
+  let finalHtml = `<div class="row justify-content-center">${tHtml}</div>`;
+  return finalHtml;
+}
+
+function DisplayTableWithWarning(error, warning, table)
+{
+  ClearDynamicElementUI();
+  let finalHtml = error+ warning + table;
+  document.getElementById("DynamicContent").innerHTML = finalHtml; 
+}
 
 function GenerateTableLayoutWithValues(peopleList)
 {

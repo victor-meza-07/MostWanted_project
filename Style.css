@@ -7,3 +7,12 @@
 {
     margin-top: 20px;
 }
+
+.footer
+{
+    position: fixed;
+    top: 100%;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}

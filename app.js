@@ -479,7 +479,7 @@ function captureUserInput(poepleDb)
   console.log(listOfMatches);
 
   //Checking for an empty list, as there has been no matches
-  if(listOfMatches == undefined)
+  if(listOfMatches == undefined || listOfMatches.length < 1)
   {
     console.log("List returned with no matches")
     let error = GenerateError(listOfMatches);
@@ -593,10 +593,17 @@ function GenerateError(object)
 {
   //this is where have to keep track of what errors we expect for what objects
   //ListOfMatches Errors
+  let error = ``;
   if(object == undefined)
   {
-    return `The search paramaters returned no matches`;
+    error += `The search paramaters returned no matches due to invalid parameters <strong>try inputting some information</strong>\n`;
   }
+  else if(object.length < 1)
+  {
+    error += `The search yielded no results due to one or more parameters <strong>try to widen your search</strong>\n`
+  }
+
+  return error;
 }
 
 function GenerateHtmlForError(error)

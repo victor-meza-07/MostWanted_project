@@ -490,13 +490,13 @@ function captureUserInput(poepleDb)
   ObjectHoldingValidFieldsAndErrorFields.CollectionOfErrors = [];
   ObjectHoldingValidFieldsAndErrorFields.CollectionOfValids = [];
 
-  let name = {value: document.getElementById("SrchName").value, type:7}
-  let gender = {value: document.getElementById("SrchGndr").value, type:1}
-  let age = {value: document.getElementById("SrchDoB").value, type:2}
-  let weight = {value: document.getElementById("SrchWeight").value, type:3}
-  let height = {value: document.getElementById("SrchHeight").value, type:4}
-  let eyeColor = {value: document.getElementById("SrchEyeColor").value, type:5}
-  let occupation = {value: document.getElementById("SrchOcc").value, type:6}
+  let name = {value: document.getElementById("SrchName").value.trim(), type:7}
+  let gender = {value: document.getElementById("SrchGndr").value.trim(), type:1}
+  let age = {value: document.getElementById("SrchDoB").value.trim(), type:2}
+  let weight = {value: document.getElementById("SrchWeight").value.trim(), type:3}
+  let height = {value: document.getElementById("SrchHeight").value.trim(), type:4}
+  let eyeColor = {value: document.getElementById("SrchEyeColor").value.trim(), type:5}
+  let occupation = {value: document.getElementById("SrchOcc").value.trim(), type:6}
 
   let collectionOfFields = [name, age, weight, height, eyeColor, occupation,gender];
   let filteredCollection = collectionOfFields.filter(function(item){

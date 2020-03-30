@@ -796,6 +796,7 @@ function BuildDetailsHtml(person)
   `<p class="card-text">Weight: ${person.weight}</p>`+
   `<p class="card-text">Eye Color: ${person.eyeColor}</p>`+
   `<p class="card-text">Occupation: ${person.occupation}</p>`+
+  `<button class="btn btn-danger btn-sm" onclick="app(data)">Show Me Family</button>`+
   `</div></div>`;
 
   DisplayDetails(card);
